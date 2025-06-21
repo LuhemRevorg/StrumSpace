@@ -12,6 +12,8 @@ guitarenv/
 # OS-specific
 .DS_Store
 
+guitarenv/
+
 # IDEs
 .vscode/
 .idea/
