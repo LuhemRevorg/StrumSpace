@@ -1,9 +1,12 @@
-//server.js - Your main API server
+// server.js - Updated with Service Orchestration
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const http = require('http');
 const socketIo = require('socket.io');
+
+// Import your new orchestrator
+const ServiceOrchestrator = require('./services/orchestrator');
 
 const app = express();
 const server = http.createServer(app);
@@ -16,12 +19,12 @@ const io = socketIo(server, {
 
 // Middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '10mb' })); // Increased for image data
 
-// Store active sessions for real-time communication
+// Store active sessions
 const activeSessions = new Map();
 
-// 🎸 CHORD DATABASE - Your core data
+// 🎸 CHORD DATABASE (same as before)
 const chordDatabase = {
   "amajor": {
     "id": "amajor",
@@ -89,17 +92,38 @@ const chordDatabase = {
   }
 };
 
-// API ENDPOINTS
+// 🎯 INITIALIZE SERVICE ORCHESTRATOR
+const orchestrator = new ServiceOrchestrator(chordDatabase, io);
+
+// Listen for orchestrator events
+orchestrator.on('service-down', (data) => {
+  console.log(`🚨 Service Alert: ${data.serviceName} is down`);
+  io.emit('service-alert', {
+    type: 'service_down',
+    service: data.serviceName,
+    message: `${data.service.name} is temporarily unavailable`
+  });
+});
+
+orchestrator.on('service-recovered', (data) => {
+  console.log(`🎉 Service Recovery: ${data.serviceName} is back online`);
+  io.emit('service-alert', {
+    type: 'service_recovered',
+    service: data.serviceName,
+    message: `${data.service.name} is back online`
+  });
+});
+
+// 📡 API ENDPOINTS (Enhanced with orchestration)
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
+  const systemStatus = orchestrator.getSystemStatus();
   res.json({
     status: 'healthy',
     timestamp: Date.now(),
-    services: {
-      api: 'running',
-      websocket: `${activeSessions.size} active sessions`
-    },
+    system: systemStatus,
+    activeSessions: activeSessions.size,
     uptime: process.uptime()
   });
 });
@@ -136,7 +160,7 @@ app.get('/api/chords', (req, res) => {
   });
 });
 
-// Search chords by name
+// Search chords
 app.get('/api/chords/search', (req, res) => {
   const query = req.query.q?.toLowerCase() || '';
   
@@ -171,7 +195,7 @@ app.get('/api/progression/:key', (req, res) => {
   const chordNames = progressions[key] || progressions['G'];
   const chords = chordNames
     .map(name => chordDatabase[name])
-    .filter(Boolean); // Remove any undefined chords
+    .filter(Boolean);
   
   res.json({
     key: key,
@@ -180,12 +204,73 @@ app.get('/api/progression/:key', (req, res) => {
   });
 });
 
-// 🔄 WEBSOCKET HANDLING - Real-time communication with AI and CV services
+// 🎯 NEW: ORCHESTRATED REQUEST ENDPOINT
+app.post('/api/process-request', async (req, res) => {
+  const { question, imageData, userId, sessionId } = req.body;
+  
+  if (!question || !userId) {
+    return res.status(400).json({
+      error: 'Missing required fields: question and userId'
+    });
+  }
+  
+  try {
+    const result = await orchestrator.processUserRequest(
+      question, 
+      imageData, 
+      userId, 
+      sessionId || `session_${Date.now()}`
+    );
+    
+    res.json(result);
+  } catch (error) {
+    console.error('Request processing error:', error);
+    res.status(500).json({
+      error: 'Internal server error',
+      message: 'Failed to process request'
+    });
+  }
+});
+
+// System status endpoint
+app.get('/api/system-status', (req, res) => {
+  res.json(orchestrator.getSystemStatus());
+});
+
+// Service registration endpoint
+app.post('/api/service/register', (req, res) => {
+  const { serviceName, serviceUrl, capabilities } = req.body;
+  
+  if (!serviceName || !serviceUrl) {
+    return res.status(400).json({
+      error: 'serviceName and serviceUrl are required'
+    });
+  }
+  
+  orchestrator.registerService(serviceName, {
+    url: serviceUrl,
+    capabilities: capabilities || [],
+    registeredAt: Date.now()
+  });
+  
+  console.log(`🔧 Service registered: ${serviceName} at ${serviceUrl}`);
+  
+  res.json({ 
+    status: 'registered',
+    message: `${serviceName} successfully registered`,
+    timestamp: Date.now()
+  });
+});
+
+// 🔄 WEBSOCKET HANDLING (Enhanced with orchestration)
 
 io.on('connection', (socket) => {
-  console.log('🔌 Frontend connected:', socket.id);
+  console.log('🔌 Client connected:', socket.id);
   
-  // When frontend joins a session
+  // Send current system status on connect
+  socket.emit('system-health', orchestrator.getSystemStatus());
+  
+  // Session management
   socket.on('join-session', (data) => {
     const { userId, sessionId } = data;
     activeSessions.set(socket.id, { 
@@ -198,27 +283,52 @@ io.on('connection', (socket) => {
     
     socket.emit('session-joined', { 
       sessionId, 
-      message: 'Connected to guitar learning session',
+      message: 'Connected to AR Guitar Learning System',
+      systemStatus: orchestrator.getSystemStatus(),
       availableChords: Object.keys(chordDatabase)
     });
   });
   
-  // Handle user questions (forward to AI service)
-  socket.on('user-question', (data) => {
-    console.log('❓ User question:', data.question);
+  // Handle user questions through orchestrator
+  socket.on('user-question', async (data) => {
+    console.log('❓ User question via WebSocket:', data.question);
     
-    // Broadcast to AI service (your AI friend will receive this)
-    socket.broadcast.emit('process-question', {
-      question: data.question,
-      userId: data.userId,
+    try {
+      const result = await orchestrator.processUserRequest(
+        data.question,
+        data.imageData,
+        data.userId,
+        data.sessionId
+      );
+      
+      // Response is already broadcast by orchestrator
+      socket.emit('request-processed', {
+        requestId: result.requestId,
+        success: result.success
+      });
+      
+    } catch (error) {
+      console.error('WebSocket request error:', error);
+      socket.emit('request-error', {
+        error: 'Failed to process question',
+        originalQuestion: data.question
+      });
+    }
+  });
+  
+  // Handle camera frames for CV processing
+  socket.on('camera-frame', (data) => {
+    // Forward camera data to CV service via orchestrator
+    socket.broadcast.emit('process-frame', {
+      imageData: data.imageData,
       sessionId: data.sessionId,
       timestamp: Date.now()
     });
   });
   
-  // Handle AI responses (from your AI friend)
+  // Handle service communication
   socket.on('ai-response', (data) => {
-    console.log('🤖 AI Response received:', data.response?.substring(0, 50) + '...');
+    console.log('🤖 Direct AI Response received (legacy mode)');
     
     // Forward to frontend
     socket.broadcast.emit('ai-message', {
@@ -228,23 +338,24 @@ io.on('connection', (socket) => {
       timestamp: Date.now()
     });
     
-    // If AI detected a chord, get the chord data and send to CV
+    // Handle chord highlighting
     if (data.detectedChords?.length > 0) {
       const chordName = data.detectedChords[0].toLowerCase().replace(/\s+/g, '');
       const chord = chordDatabase[chordName];
       
       if (chord) {
-        console.log(`🎸 Sending chord data for: ${chord.name}`);
-        socket.broadcast.emit('chord-data', chord);
+        socket.broadcast.emit('chord-highlight', {
+          chord: chord,
+          highlightDuration: 5000,
+          source: 'direct_ai'
+        });
       }
     }
   });
   
-  // Handle AR positions (from your CV friend)
   socket.on('ar-positions', (data) => {
-    console.log('📷 AR positions received for chord');
+    console.log('📷 Direct AR positions received (legacy mode)');
     
-    // Forward to frontend for display
     socket.broadcast.emit('ar-update', {
       positions: data.chord_positions || [],
       transformation: data.transformation,
@@ -253,57 +364,24 @@ io.on('connection', (socket) => {
     });
   });
   
-  // Handle image data for CV processing
-  socket.on('camera-frame', (data) => {
-    // Forward camera data to CV service
-    socket.broadcast.emit('process-frame', {
-      imageData: data.imageData,
-      sessionId: data.sessionId,
-      timestamp: Date.now()
-    });
-  });
-  
   socket.on('disconnect', () => {
-    console.log('🔌 Frontend disconnected:', socket.id);
+    console.log('🔌 Client disconnected:', socket.id);
     activeSessions.delete(socket.id);
   });
 });
 
-// SYSTEM STATUS ENDPOINTS
-
-app.get('/api/status', (req, res) => {
-  res.json({
-    server: 'running',
-    activeSessions: activeSessions.size,
-    availableChords: Object.keys(chordDatabase).length,
-    uptime: process.uptime(),
-    memory: process.memoryUsage(),
-    timestamp: Date.now()
-  });
-});
-
-// Service registration endpoint (for your friends' services)
-app.post('/api/service/register', (req, res) => {
-  const { serviceName, serviceUrl, capabilities } = req.body;
-  
-  console.log(`🔧 Service registered: ${serviceName} at ${serviceUrl}`);
-  console.log(`📋 Capabilities: ${capabilities?.join(', ') || 'none specified'}`);
-  
-  res.json({ 
-    status: 'registered',
-    message: `${serviceName} successfully registered`,
-    timestamp: Date.now()
-  });
-});
-
-// START SERVER
-
+// 🚀 START SERVER
 const PORT = process.env.PORT || 3001;
 
 server.listen(PORT, () => {
-  console.log(`🎸 AR Guitar API Server running on port ${PORT}`);
+  console.log(`🎸 AR Guitar API Server with Orchestration running on port ${PORT}`);
   console.log(`📊 Health check: http://localhost:${PORT}/api/health`);
   console.log(`🎵 Try chord API: http://localhost:${PORT}/api/chord/amajor`);
   console.log(`📚 All chords: http://localhost:${PORT}/api/chords`);
+  console.log(`🎯 Orchestrated requests: http://localhost:${PORT}/api/process-request`);
+  console.log(`📈 System status: http://localhost:${PORT}/api/system-status`);
   console.log(`🔄 WebSocket ready for real-time communication`);
+  console.log(`🤖 AI Service expected at: ${process.env.AI_SERVICE_URL || 'http://localhost:3002'}`);
+  console.log(`📷 CV Service expected at: ${process.env.CV_SERVICE_URL || 'http://localhost:5000'}`);
+  console.log(`🎯 Service Orchestrator initialized and monitoring services`);
 });
