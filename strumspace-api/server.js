@@ -24,73 +24,312 @@ app.use(express.json({ limit: '10mb' })); // Increased for image data
 // Store active sessions
 const activeSessions = new Map();
 
-// 🎸 CHORD DATABASE (same as before)
+// CHORD DATABASE
 const chordDatabase = {
-  "amajor": {
-    "id": "amajor",
-    "name": "A Major",
-    "displayName": "A",
-    "difficulty": "beginner",
-    "positions": [
-      { "string": 2, "fret": 2, "finger": 1 },
-      { "string": 3, "fret": 2, "finger": 2 },
-      { "string": 4, "fret": 2, "finger": 3 }
-    ],
-    "tips": "Keep fingers curved and press firmly behind the frets",
-    "audioUrl": "/audio/chords/amajor.mp3"
-  },
-  "eminor": {
-    "id": "eminor",
-    "name": "E Minor",
-    "displayName": "Em",
-    "difficulty": "beginner",
-    "positions": [
-      { "string": 5, "fret": 2, "finger": 2 },
-      { "string": 4, "fret": 2, "finger": 3 }
-    ],
-    "tips": "One of the easiest chords - great for beginners",
-    "audioUrl": "/audio/chords/eminor.mp3"
-  },
-  "dmajor": {
-    "id": "dmajor",
-    "name": "D Major",
-    "displayName": "D",
-    "difficulty": "beginner",
-    "positions": [
-      { "string": 1, "fret": 2, "finger": 1 },
-      { "string": 2, "fret": 2, "finger": 3 },
-      { "string": 3, "fret": 3, "finger": 2 }
-    ],
-    "tips": "Form a triangle with your fingers",
-    "audioUrl": "/audio/chords/dmajor.mp3"
-  },
-  "cmajor": {
-    "id": "cmajor",
-    "name": "C Major",
-    "displayName": "C",
-    "difficulty": "intermediate",
-    "positions": [
-      { "string": 2, "fret": 1, "finger": 1 },
-      { "string": 4, "fret": 2, "finger": 2 },
-      { "string": 5, "fret": 3, "finger": 3 }
-    ],
-    "tips": "Stretch your fingers and avoid touching other strings",
-    "audioUrl": "/audio/chords/cmajor.mp3"
-  },
-  "gmajor": {
-    "id": "gmajor",
-    "name": "G Major",
-    "displayName": "G",
-    "difficulty": "intermediate",
-    "positions": [
-      { "string": 1, "fret": 3, "finger": 2 },
-      { "string": 6, "fret": 3, "finger": 1 },
-      { "string": 5, "fret": 2, "finger": 3 }
-    ],
-    "tips": "Use fingertips and arch your hand",
-    "audioUrl": "/audio/chords/gmajor.mp3"
-  }
-};
+    // MAJOR CHORDS (Beginner)
+    "a": {
+      "id": "a",
+      "name": "A Major",
+      "displayName": "A",
+      "difficulty": "beginner",
+      "positions": [
+        { "string": 2, "fret": 2, "finger": 1 },
+        { "string": 3, "fret": 2, "finger": 2 },
+        { "string": 4, "fret": 2, "finger": 3 }
+      ],
+      "tips": "Keep fingers curved and press firmly behind the frets",
+      "audioUrl": "/audio/chords/a.mp3"
+    },
+    "amajor": { "redirect": "a" },
+    
+    "c": {
+      "id": "c",
+      "name": "C Major",
+      "displayName": "C",
+      "difficulty": "beginner",
+      "positions": [
+        { "string": 2, "fret": 1, "finger": 1 },
+        { "string": 4, "fret": 2, "finger": 2 },
+        { "string": 5, "fret": 3, "finger": 3 }
+      ],
+      "tips": "Stretch your fingers and avoid touching other strings",
+      "audioUrl": "/audio/chords/c.mp3"
+    },
+    "cmajor": { "redirect": "c" },
+    
+    "d": {
+      "id": "d",
+      "name": "D Major",
+      "displayName": "D",
+      "difficulty": "beginner",
+      "positions": [
+        { "string": 1, "fret": 2, "finger": 1 },
+        { "string": 2, "fret": 2, "finger": 3 },
+        { "string": 3, "fret": 3, "finger": 2 }
+      ],
+      "tips": "Form a triangle with your fingers",
+      "audioUrl": "/audio/chords/d.mp3"
+    },
+    "dmajor": { "redirect": "d" },
+    
+    "e": {
+      "id": "e",
+      "name": "E Major", 
+      "displayName": "E",
+      "difficulty": "beginner",
+      "positions": [
+        { "string": 3, "fret": 1, "finger": 1 },
+        { "string": 5, "fret": 2, "finger": 2 },
+        { "string": 4, "fret": 2, "finger": 3 }
+      ],
+      "tips": "Similar to Em but add one finger on the G string",
+      "audioUrl": "/audio/chords/e.mp3"
+    },
+    "emajor": { "redirect": "e" },
+    
+    "g": {
+      "id": "g",
+      "name": "G Major",
+      "displayName": "G",
+      "difficulty": "intermediate",
+      "positions": [
+        { "string": 1, "fret": 3, "finger": 2 },
+        { "string": 6, "fret": 3, "finger": 1 },
+        { "string": 5, "fret": 2, "finger": 3 }
+      ],
+      "tips": "Use fingertips and arch your hand",
+      "audioUrl": "/audio/chords/g.mp3"
+    },
+    "gmajor": { "redirect": "g" },
+  
+    // MINOR CHORDS (Beginner)
+    "am": {
+      "id": "am",
+      "name": "A Minor",
+      "displayName": "Am",
+      "difficulty": "beginner",
+      "positions": [
+        { "string": 2, "fret": 1, "finger": 1 },
+        { "string": 3, "fret": 2, "finger": 2 },
+        { "string": 4, "fret": 2, "finger": 3 }
+      ],
+      "tips": "Very similar to A major, just move one finger",
+      "audioUrl": "/audio/chords/am.mp3"
+    },
+    "aminor": { "redirect": "am" },
+    
+    "em": {
+      "id": "em",
+      "name": "E Minor",
+      "displayName": "Em",
+      "difficulty": "beginner",
+      "positions": [
+        { "string": 5, "fret": 2, "finger": 2 },
+        { "string": 4, "fret": 2, "finger": 3 }
+      ],
+      "tips": "One of the easiest chords - great for beginners",
+      "audioUrl": "/audio/chords/em.mp3"
+    },
+    "eminor": { "redirect": "em" },
+    
+    "dm": {
+      "id": "dm",
+      "name": "D Minor",
+      "displayName": "Dm", 
+      "difficulty": "beginner",
+      "positions": [
+        { "string": 1, "fret": 1, "finger": 1 },
+        { "string": 2, "fret": 3, "finger": 3 },
+        { "string": 3, "fret": 2, "finger": 2 }
+      ],
+      "tips": "Keep fingers close to frets and arch your hand",
+      "audioUrl": "/audio/chords/dm.mp3"
+    },
+    "dminor": { "redirect": "dm" },
+  
+    // INTERMEDIATE CHORDS
+    "f": {
+      "id": "f",
+      "name": "F Major",
+      "displayName": "F",
+      "difficulty": "intermediate",
+      "positions": [
+        { "string": 1, "fret": 1, "finger": 1 },
+        { "string": 2, "fret": 1, "finger": 1 },
+        { "string": 3, "fret": 2, "finger": 2 },
+        { "string": 4, "fret": 3, "finger": 4 },
+        { "string": 5, "fret": 3, "finger": 3 },
+        { "string": 6, "fret": 1, "finger": 1 }
+      ],
+      "tips": "First barre chord! Press firmly across 1st fret with index finger",
+      "audioUrl": "/audio/chords/f.mp3",
+      "isBarreChord": true
+    },
+    "fmajor": { "redirect": "f" },
+    
+    "bm": {
+      "id": "bm",
+      "name": "B Minor",
+      "displayName": "Bm",
+      "difficulty": "intermediate",
+      "positions": [
+        { "string": 1, "fret": 2, "finger": 1 },
+        { "string": 2, "fret": 3, "finger": 2 },
+        { "string": 3, "fret": 4, "finger": 4 },
+        { "string": 4, "fret": 4, "finger": 3 },
+        { "string": 5, "fret": 2, "finger": 1 },
+        { "string": 6, "fret": 2, "finger": 1 }
+      ],
+      "tips": "Barre chord - press index finger across all strings at 2nd fret",
+      "audioUrl": "/audio/chords/bm.mp3",
+      "isBarreChord": true
+    },
+    "bminor": { "redirect": "bm" },
+  
+    // SEVENTH CHORDS
+    "a7": {
+      "id": "a7",
+      "name": "A Dominant 7",
+      "displayName": "A7",
+      "difficulty": "intermediate",
+      "positions": [
+        { "string": 2, "fret": 2, "finger": 2 },
+        { "string": 4, "fret": 2, "finger": 3 }
+      ],
+      "tips": "Easy version of A7 - just two fingers!",
+      "audioUrl": "/audio/chords/a7.mp3"
+    },
+    
+    "d7": {
+      "id": "d7",
+      "name": "D Dominant 7",
+      "displayName": "D7",
+      "difficulty": "intermediate",
+      "positions": [
+        { "string": 1, "fret": 2, "finger": 2 },
+        { "string": 2, "fret": 1, "finger": 1 },
+        { "string": 3, "fret": 2, "finger": 3 }
+      ],
+      "tips": "Great for blues and country music",
+      "audioUrl": "/audio/chords/d7.mp3"
+    },
+    
+    "e7": {
+      "id": "e7",
+      "name": "E Dominant 7",
+      "displayName": "E7",
+      "difficulty": "intermediate",
+      "positions": [
+        { "string": 3, "fret": 1, "finger": 1 },
+        { "string": 5, "fret": 2, "finger": 2 }
+      ],
+      "tips": "Like E major but remove one finger",
+      "audioUrl": "/audio/chords/e7.mp3"
+    },
+    
+    "g7": {
+      "id": "g7",
+      "name": "G Dominant 7",
+      "displayName": "G7",
+      "difficulty": "intermediate",
+      "positions": [
+        { "string": 1, "fret": 1, "finger": 1 },
+        { "string": 6, "fret": 3, "finger": 3 },
+        { "string": 5, "fret": 2, "finger": 2 }
+      ],
+      "tips": "Common in folk and country music",
+      "audioUrl": "/audio/chords/g7.mp3"
+    },
+  
+    // POWER CHORDS (Advanced)
+    "a5": {
+      "id": "a5",
+      "name": "A Power Chord",
+      "displayName": "A5",
+      "difficulty": "intermediate",
+      "positions": [
+        { "string": 6, "fret": 5, "finger": 1 },
+        { "string": 5, "fret": 7, "finger": 3 }
+      ],
+      "tips": "Great for rock music - only 2 fingers needed",
+      "audioUrl": "/audio/chords/a5.mp3"
+    },
+    
+    "e5": {
+      "id": "e5",
+      "name": "E Power Chord",
+      "displayName": "E5",
+      "difficulty": "intermediate",
+      "positions": [
+        { "string": 6, "fret": 0, "finger": 0 },
+        { "string": 5, "fret": 2, "finger": 2 }
+      ],
+      "tips": "Classic rock chord - open low E string",
+      "audioUrl": "/audio/chords/e5.mp3"
+    },
+  
+    // SUSPENDED CHORDS
+    "dsus2": {
+      "id": "dsus2",
+      "name": "D Suspended 2",
+      "displayName": "Dsus2",
+      "difficulty": "intermediate",
+      "positions": [
+        { "string": 1, "fret": 0, "finger": 0 },
+        { "string": 2, "fret": 3, "finger": 3 },
+        { "string": 3, "fret": 2, "finger": 2 }
+      ],
+      "tips": "Creates tension that wants to resolve to D major",
+      "audioUrl": "/audio/chords/dsus2.mp3"
+    },
+    
+    "dsus4": {
+      "id": "dsus4",
+      "name": "D Suspended 4",
+      "displayName": "Dsus4",
+      "difficulty": "intermediate",
+      "positions": [
+        { "string": 1, "fret": 3, "finger": 3 },
+        { "string": 2, "fret": 3, "finger": 4 },
+        { "string": 3, "fret": 2, "finger": 2 }
+      ],
+      "tips": "Common in folk music - like D but with pinky added",
+      "audioUrl": "/audio/chords/dsus4.mp3"
+    },
+  
+    // CAPO VARIATIONS & ALTERNATIVES
+    "cadd9": {
+      "id": "cadd9",
+      "name": "C Add 9",
+      "displayName": "Cadd9", 
+      "difficulty": "intermediate",
+      "positions": [
+        { "string": 1, "fret": 3, "finger": 4 },
+        { "string": 2, "fret": 3, "finger": 3 },
+        { "string": 4, "fret": 2, "finger": 2 },
+        { "string": 5, "fret": 3, "finger": 1 }
+      ],
+      "tips": "Beautiful open chord - adds color to C major",
+      "audioUrl": "/audio/chords/cadd9.mp3"
+    },
+    
+    "g/b": {
+      "id": "g/b",
+      "name": "G over B",
+      "displayName": "G/B",
+      "difficulty": "advanced",
+      "positions": [
+        { "string": 1, "fret": 3, "finger": 4 },
+        { "string": 2, "fret": 0, "finger": 0 },
+        { "string": 3, "fret": 0, "finger": 0 },
+        { "string": 4, "fret": 0, "finger": 0 },
+        { "string": 5, "fret": 2, "finger": 2 },
+        { "string": 6, "fret": 2, "finger": 1 }
+      ],
+      "tips": "Bass note is B - creates smooth bass line movement",
+      "audioUrl": "/audio/chords/gb.mp3"
+    }
+  };
 
 // 🎯 INITIALIZE SERVICE ORCHESTRATOR
 const orchestrator = new ServiceOrchestrator(chordDatabase, io);
@@ -385,3 +624,4 @@ server.listen(PORT, () => {
   console.log(`📷 CV Service expected at: ${process.env.CV_SERVICE_URL || 'http://localhost:5000'}`);
   console.log(`🎯 Service Orchestrator initialized and monitoring services`);
 });
+

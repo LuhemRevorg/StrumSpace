@@ -50,7 +50,7 @@ class ServiceOrchestrator extends EventEmitter {
     console.log('🎯 Service Orchestrator initialized');
   }
 
-  // 🎯 MAIN COORDINATION FUNCTION - The Heart of Your System
+  // MAIN COORDINATION FUNCTION
   async processUserRequest(question, imageData, userId, sessionId) {
     const startTime = Date.now();
     const requestId = this.generateRequestId();
@@ -114,7 +114,7 @@ class ServiceOrchestrator extends EventEmitter {
     }
   }
 
-  // 🤖 AI SERVICE COMMUNICATION
+  // AI SERVICE COMMUNICATION
   async callAIServiceWithFallback(question, userId, requestId) {
     const service = this.services.ai;
     
@@ -154,7 +154,7 @@ class ServiceOrchestrator extends EventEmitter {
     }
   }
 
-  // 📷 CV SERVICE COMMUNICATION
+  // CV SERVICE COMMUNICATION
   async callCVServiceWithFallback(imageData, chordData, requestId) {
     const service = this.services.cv;
     
@@ -194,7 +194,7 @@ class ServiceOrchestrator extends EventEmitter {
     }
   }
 
-  // 🔄 INTELLIGENT FALLBACKS
+  // INTELLIGENT FALLBACKS
   getFallbackAIResponse(question, requestId) {
     console.log(`🤖 [${requestId}] Using AI fallback response`);
     
