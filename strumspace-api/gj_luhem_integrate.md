@@ -396,5 +396,3 @@ If you need help integrating:
 2. Use `/api/system-status` to debug service connectivity
 3. Test individual endpoints before full integration
 4. Monitor health checks to ensure services stay connected
-
-**The API server is designed to be forgiving - it will work with fallbacks even if your services have issues!** 🛡️
