@@ -1,0 +1,47 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+guitarenv/
+.env/
+.venv/
+
+# OS-specific
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
+
+# Logs and outputs
+*.log
+*.out
+*.tmp
+
+# Python build artifacts
+*.egg
+*.egg-info/
+dist/
+build/
+
+# MediaPipe internal cache (optional)
+mediapipe_modules/
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# User-specific files
+*.swp
+*.swo
+
+# Test and debug artifacts
+coverage.xml
+htmlcov/
+.tox/
+.nox/
+
+# macOS system files
+*.DS_Store
