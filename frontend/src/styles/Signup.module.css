@@ -1,0 +1,176 @@
+.container {
+  min-width: 620px;
+  margin: 1px auto;
+  padding: 20px 32px;
+  background: #0d0d2b;
+  border-radius: 24px;
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid rgba(0, 255, 255, 0.15);
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 32px;
+  color: #00fff7;
+  text-shadow: 0 0 8px #00fff7, 0 0 16px #00fff7;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1.2px;
+  text-align: center;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  color: #ffffff;
+  font-size: 1rem;
+  font-family: 'Orbitron', sans-serif;
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.5px;
+}
+
+.input {
+  padding: 12px 16px;
+  font-size: 1rem;
+  border-radius: 12px;
+  border: none;
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+  box-shadow: inset 0 0 8px rgba(0, 255, 255, 0.15);
+  transition: box-shadow 0.3s;
+}
+
+.input:focus {
+  outline: none;
+  box-shadow: 0 0 12px #00fff7;
+  background: rgba(0, 255, 255, 0.05);
+}
+
+.button {
+  margin-top: 20px;
+  padding: 14px;
+  background: #00fff7;
+  color: #000;
+  font-size: 1.2rem;
+  font-weight: 800;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  box-shadow: 0 0 25px #00fff7, 0 0 60px #00fff7;
+  transition: all 0.3s ease;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.button:hover {
+  background: #0ff;
+  box-shadow: 0 0 40px #00fff7, 0 0 90px #00fff7;
+}
+
+.error {
+  color: #ff4e6d;
+  font-size: 0.9rem;
+  text-align: center;
+  text-shadow: 0 0 6px rgba(255, 0, 0, 0.6);
+}
+
+/* Outer layout */
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  padding: 60px 40px;
+  flex-wrap: wrap;
+  background: radial-gradient(circle at top, #0f0c29, #302b63, #000);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+
+/* Left Signup Form – reuse previous styles */
+.container {
+  width: 420px;
+  padding: 40px 32px;
+  background: #0d0d2b;
+  border-radius: 24px;
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(0, 255, 255, 0.15);
+}
+
+/* Right Social Container */
+.socialContainer {
+  width: 300px;
+  padding: 32px 24px;
+  background: rgba(0, 10, 30, 0.9);
+  border-radius: 24px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.socialTitle {
+  color: #ffffff;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Glowing button styles */
+.socialButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.08);
+}
+
+/* Individual providers with hover glow */
+.discord {
+  background: #5865f2;
+}
+.discord:hover {
+  box-shadow: 0 0 20px #5865f2, 0 0 40px #5865f2;
+}
+
+.google {
+  background: #db4437;
+}
+.google:hover {
+  box-shadow: 0 0 20px #db4437, 0 0 40px #db4437;
+}
+
+.apple {
+  background: #1c1c1e;
+}
+.apple:hover {
+  box-shadow: 0 0 20px #ffffff, 0 0 40px #ffffff;
+}
