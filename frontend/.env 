@@ -1,6 +1,0 @@
-OPENAI_API_KEY=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
-# In one terminal
-node server.js
-
-# In another terminal
-npm run dev
