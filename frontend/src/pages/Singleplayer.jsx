@@ -15,7 +15,6 @@ function SinglePlayer({ onAudioReady }) {
   const [transcript, setTranscript] = useState('');
   const [audioBlob, setAudioBlob] = useState(null);
 
-  // Chord progression state
   const [sessionId, setSessionId] = useState(null);
   const [currentChord, setCurrentChord] = useState(null);
   const [chordSequence, setChordSequence] = useState([]);
@@ -555,7 +554,9 @@ function SinglePlayer({ onAudioReady }) {
   // =========================
   return (
     <div className={styles.playerWrapper}>
-      {/* Video Display Area */}
+      <h1>Single Player Mode</h1>
+
+
       <div className={styles.videoContainer}>
         {/* Hidden video element */}
         <video 

@@ -56,6 +56,8 @@ function FreePlay({ onAudioReady }) {
 
   return (
     <div className={styles.playerWrapper}>
+      <h1>Free Play Mode</h1>
+
       <div className={styles.videoContainer}>
         <video ref={videoRef} className={styles.video} autoPlay muted />
       </div>
