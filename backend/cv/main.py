@@ -1,5 +1,3 @@
-# main.py — With YOLO fret zone detection and audio verification
-
 import cv2
 import time
 import threading

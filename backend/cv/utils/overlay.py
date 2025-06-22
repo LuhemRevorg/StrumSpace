@@ -23,6 +23,6 @@ def draw_fretboard_overlay(frame, chord_data, chord_name, fret_boxes):
         cy = int((y1 + y2) / 2)
 
         print(f"🎯 Fret {fret}, String {string} → Dot at ({cx}, {cy})")
-        cv2.circle(frame, (cx, cy), 10, (0, 0, 255), -1)
+        cv2.circle(frame, (cx, cy), 14, (0, 0, 255), -1)  # slightly larger dot
 
     return frame
