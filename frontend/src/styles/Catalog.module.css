@@ -1,11 +1,11 @@
 .catalogPage {
   padding: 2rem;
-  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-  min-height: 100vh;
+  background: linear-gradient(135deg, #2e0f0f, #5a1e2e, #751d3f);
+  min-height: 90vh;
   color: #fff;
   font-family: 'Orbitron', sans-serif;
-    overflow-y: scroll;
-
+  overflow-y: scroll;
+  border-radius: 15px;
 }
 
 .topBar {
@@ -22,9 +22,9 @@
   font-size: 1rem;
   border: none;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.06);
   color: #fff;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 8px rgba(255, 100, 100, 0.08);
   transition: all 0.3s ease;
   backdrop-filter: blur(6px);
 }
@@ -32,8 +32,8 @@
 .searchBar:focus,
 .filterDropdown:focus {
   outline: none;
-  box-shadow: 0 0 12px #00ffe5;
-  background-color: rgba(0, 255, 229, 0.08);
+  box-shadow: 0 0 12px #ff6b6b;
+  background-color: rgba(255, 107, 107, 0.08);
 }
 
 .grid {
@@ -45,7 +45,7 @@
 .card {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 16px;
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.05);
+  box-shadow: 0 0 15px rgba(255, 107, 107, 0.05);
   padding: 1rem;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -56,7 +56,7 @@
 
 .card:hover {
   transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 0 25px rgba(0, 255, 255, 0.15);
+  box-shadow: 0 0 25px rgba(255, 107, 107, 0.15);
 }
 
 .cover {
@@ -95,7 +95,6 @@
   z-index: 1;
 }
 
-/* Ring effect around difficulty label */
 .level::before {
   content: "";
   position: absolute;
@@ -113,7 +112,7 @@
   }
   50% {
     transform: scale(1.15);
-    opacity: 0.1;
+    opacity: 0.15;
   }
   100% {
     transform: scale(1);
@@ -121,29 +120,27 @@
   }
 }
 
+/* Difficulty Labels with red theme */
 .easy {
-  background: #b8f2e6;
-  color: #0f5132;
+  background: #ffd6d6;
+  color: #730000;
 }
-
 .easy::before {
-  background: #0f5132;
+  background: #730000;
 }
 
 .medium {
-  background: #ffe066;
-  color: #664d03;
+  background: #ffc078;
+  color: #7f4f00;
 }
-
 .medium::before {
-  background: #664d03;
+  background: #7f4f00;
 }
 
 .hard {
-  background: #ff6b81;
-  color: #800f2f;
+  background: #ff4d6d;
+  color: #4d0000;
 }
-
 .hard::before {
-  background: #800f2f;
+  background: #4d0000;
 }

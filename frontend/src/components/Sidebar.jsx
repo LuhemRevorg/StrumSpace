@@ -8,9 +8,14 @@ function Sidebar({ onTabChange, activeTab }) {
 
   const toggleSidebar = () => setCollapsed(prev => !prev);
 
-  const handleTabClick = (tab) => {
-    onTabChange(tab);
-  };
+  const tabs = [
+    { key: 'minidash', label: 'Dashboard' },
+    { key: 'catalog', label: 'Song Catalog' },
+    { key: 'single', label: 'Single Player' },
+    { key: 'multi', label: 'Multi Player' },
+    { key: 'freeplay', label: 'Freeplay Random Chords' },
+    { key: 'settings', label: 'Settings' },
+  ];
 
   return (
     <div className={`${styles.sidebar} ${collapsed ? styles.collapsed : ''}`}>
@@ -20,17 +25,22 @@ function Sidebar({ onTabChange, activeTab }) {
         </button>
         {!collapsed && (
           <h2 className={styles.logo}>
-            <span className={styles.logoLink}>StrumSpace Studio</span>
+            
           </h2>
         )}
       </div>
 
       {!collapsed && (
         <ul className={styles.nav}>
-          <li onClick={() => handleTabClick('dashboard')} className={activeTab === 'dashboard' ? styles.active : ''}>Dashboard</li>
-          <li onClick={() => handleTabClick('catalog')} className={activeTab === 'catalog' ? styles.active : ''}>Song Catalog</li>
-          <li onClick={() => handleTabClick('multi')} className={activeTab === 'multi' ? styles.active : ''}>Multi Player</li>
-          <li onClick={() => handleTabClick('settings')} className={activeTab === 'settings' ? styles.active : ''}>Settings</li>
+          {tabs.map((tab) => (
+            <li
+              key={tab.key}
+              onClick={() => onTabChange(tab.key)}
+              className={`${styles.navLink} ${activeTab === tab.key ? styles.active : ''}`}
+            >
+              {tab.label}
+            </li>
+          ))}
         </ul>
       )}
 
