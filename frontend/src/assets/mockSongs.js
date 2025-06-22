@@ -5,7 +5,7 @@ const mockSongs = [
   { id: 4, title: "Flowers", artist: "Miley Cyrus", difficulty: "Easy", cover: "/covers/miley_cyrus_flowers.jpg" },
   { id: 5, title: "Levitating", artist: "Dua Lipa", difficulty: "Medium", cover: "/covers/dua_lipa_levitating.jpg" },
   { id: 6, title: "Stay", artist: "The Kid LAROI & Justin Bieber", difficulty: "Hard", cover: "/covers/stay_laroi_bieber.jpg" },
-  { id: 7, title: "Good 4 U", artist: "Olivia Rodrigo", difficulty: "Medium", cover: "/covers/olivia_rodrigo_good4u.jpg" },
+  { id: 7, title: "Good 4 U", artist: "Olivia Rodrigo", difficulty: "Medium", cover: "/covers/olivia.jpg" },
   { id: 8, title: "Watermelon Sugar", artist: "Harry Styles", difficulty: "Easy", cover: "/covers/watermelon_sugar.jpg" },
   { id: 9, title: "Peaches", artist: "Justin Bieber", difficulty: "Easy", cover: "/covers/justin_bieber_peaches.jpg" },
   { id: 10, title: "Easy On Me", artist: "Adele", difficulty: "Medium", cover: "/covers/adele_easy_on_me.jpg" },

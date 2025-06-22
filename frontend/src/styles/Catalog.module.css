@@ -1,7 +1,11 @@
 .catalogPage {
   padding: 2rem;
-  background-color: #f9f9f9;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
   min-height: 100vh;
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+    overflow-y: scroll;
+
 }
 
 .topBar {
@@ -12,19 +16,24 @@
   gap: 1rem;
 }
 
-.searchBar {
-  flex: 1;
-  padding: 0.8rem;
+.searchBar,
+.filterDropdown {
+  padding: 0.8rem 1.2rem;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  border: none;
   border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(6px);
 }
 
-.filterDropdown {
-  padding: 0.8rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 12px;
+.searchBar:focus,
+.filterDropdown:focus {
+  outline: none;
+  box-shadow: 0 0 12px #00ffe5;
+  background-color: rgba(0, 255, 229, 0.08);
 }
 
 .grid {
@@ -34,56 +43,107 @@
 }
 
 .card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.05);
   padding: 1rem;
   text-align: center;
-  transition: transform 0.2s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(4px);
+  position: relative;
+  overflow: hidden;
 }
 
 .card:hover {
-  transform: scale(1.03);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.15);
 }
 
 .cover {
   width: 100%;
   height: 180px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 12px;
+  margin-bottom: 0.8rem;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .cover {
+  transform: scale(1.05);
 }
 
 .title {
   margin: 0.5rem 0 0.2rem;
-  font-weight: bold;
+  font-weight: 700;
   font-size: 1.1rem;
+  color: #fff;
 }
 
 .artist {
-  color: #777;
+  color: #ccc;
   font-size: 0.9rem;
 }
 
 .level {
   display: inline-block;
   margin-top: 0.5rem;
-  padding: 0.3rem 0.8rem;
+  padding: 0.4rem 0.9rem;
   border-radius: 16px;
   font-size: 0.8rem;
   font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+
+/* Ring effect around difficulty label */
+.level::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  z-index: -1;
+  animation: pulse 2s infinite;
+  opacity: 0.4;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
 }
 
 .easy {
-  background: #e0f8e9;
-  color: #2f9e44;
+  background: #b8f2e6;
+  color: #0f5132;
+}
+
+.easy::before {
+  background: #0f5132;
 }
 
 .medium {
-  background: #fff3cd;
-  color: #f59f00;
+  background: #ffe066;
+  color: #664d03;
+}
+
+.medium::before {
+  background: #664d03;
 }
 
 .hard {
-  background: #ffe3e3;
-  color: #d6336c;
+  background: #ff6b81;
+  color: #800f2f;
+}
+
+.hard::before {
+  background: #800f2f;
 }

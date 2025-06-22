@@ -5,7 +5,6 @@ import Dashboard from './pages/Dashboard';
 import Settings from './pages/Settings';
 import SinglePlayer from './pages/Singleplayer';
 import Catalog from './pages/Catalog';
-import Sidebar from './components/Sidebar';
 import MultiPlayer from './pages/MultiPlayer';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
