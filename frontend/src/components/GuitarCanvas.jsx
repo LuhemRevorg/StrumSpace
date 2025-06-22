@@ -3,15 +3,21 @@ import { OrbitControls, useGLTF } from '@react-three/drei';
 import { useRef } from 'react';
 
 function GuitarModel() {
-  const { scene } = useGLTF('/guitar.glb');
+  const { scene } = useGLTF('/acoustic_guitar.glb');
   const guitarRef = useRef();
+
+  useFrame(() => {
+    if (guitarRef.current) {
+      guitarRef.current.rotation.x += (Math.random() - 0.5) * 0.01;
+    }
+  });
+
   return (
     <primitive
       ref={guitarRef}
       object={scene}
       scale={3.5}
       position={[0, -1, 0]}
-      rotation={[0, 0, 0]}
     />
   );
 }
@@ -19,14 +25,13 @@ function GuitarModel() {
 export default function GuitarCanvas() {
   return (
     <Canvas
-      camera={{ position: [0, 0, 5], fov: 40 }}
+      camera={{ position: [-5, 2, 10], fov: 40 }}
       style={{ height: '100%', width: '100%' }}
     >
       <ambientLight intensity={0.6} />
       <directionalLight position={[5, 5, 5]} intensity={1} />
       <GuitarModel />
-      {/* Remove OrbitControls if you want it locked */}
-      {/* <OrbitControls enableZoom={false} target={[0, -1, 0]} /> */}
+      <OrbitControls enableZoom={false} target={[0, -1, 0]} />
     </Canvas>
   );
 }

@@ -1,0 +1,110 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem;
+  gap: 10rem;
+  background-color: #0f0f0f;
+  min-height: 100vh;
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* === VIDEO CONTAINER === */
+.videoContainer {
+  height: 100%;
+  max-width: 600px;
+  background: #111;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+  border: 2px solid rgba(0, 255, 255, 0.5);
+  transition: transform 0.3s ease;
+  margin-bottom: 4rem;
+}
+
+.videoContainer:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+}
+
+.video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* === BOTTOM SECTION === */
+.bottomSection {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  max-width: 960px;
+  gap: 2rem;
+}
+
+.chatbox,
+.rightBox {
+  flex: 1;
+  background-color: #1a1a1a;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+.chatbox:hover,
+.rightBox:hover {
+  box-shadow: 0 0 20px rgba(255, 20, 147, 0.5);
+}
+
+/* === CHATBOX === */
+.chatbox h3,
+.rightBox h3 {
+  color: #00ffff;
+  margin-bottom: 1rem;
+}
+
+.chatbox textarea {
+  width: 100%;
+  height: 100px;
+  resize: none;
+  padding: 0.75rem;
+  border-radius: 10px;
+  border: 2px solid #555;
+  background-color: #121212;
+  color: #fff;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+.chatbox textarea:focus {
+  border-color: #ffcc00;
+  box-shadow: 0 0 8px #ffcc00;
+}
+
+.chatbox button {
+  margin-top: 0.75rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #ff00ff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.chatbox button:hover {
+  background-color: #e600e6;
+  box-shadow: 0 0 12px #ff00ff;
+}
+
+/* === RIGHT BOX PLACEHOLDER === */
+.rightBox p {
+  color: #ccc;
+  font-size: 0.9rem;
+}

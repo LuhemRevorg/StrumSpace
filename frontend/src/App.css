@@ -23,7 +23,7 @@ html,
 body {
   height: 100%;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-  background-color: #0f0c29; /* Deep dark for hero background */
+  background-color: white; /* Deep dark for hero background */
   color: #ffffff;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;

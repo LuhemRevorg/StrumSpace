@@ -3,6 +3,9 @@ import GuitarCanvas from '../components/GuitarCanvas';
 import Navbar from '../components/Navbar';
 
 export default function Landing() {
+  const handleNavigate = () => {
+    window.location.href = '/dashboard';
+  };
   return (
     <>
       <Navbar />
@@ -14,7 +17,7 @@ export default function Landing() {
           and real-time visual feedback. Whether you're a beginner or riffing pro,
           StrumSpace makes your guitar glow with possibility. Plug in, zone out, and strum smarter.
         </p>
-        <button className={styles.cta}>Start Learning</button>
+        <button className={styles.cta} onClick={() => handleNavigate()}>Start Learning</button>
       </div>
       <div className={styles.right}>
         <GuitarCanvas />
