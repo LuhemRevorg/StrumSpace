@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import styles from '../styles/Sidebar.module.css';
 import { Menu } from 'lucide-react';
 import logo from '../logos/logo_dark.jpeg';
 
-function Sidebar() {
+function Sidebar({ onTabChange, activeTab }) {
   const [collapsed, setCollapsed] = useState(false);
 
-  const toggleSidebar = () => {
-    setCollapsed(prev => !prev);
+  const toggleSidebar = () => setCollapsed(prev => !prev);
+
+  const handleTabClick = (tab) => {
+    onTabChange(tab);
   };
 
   return (
@@ -19,17 +20,17 @@ function Sidebar() {
         </button>
         {!collapsed && (
           <h2 className={styles.logo}>
-            <Link to="/" className={styles.logoLink}>StrumSpace Studio</Link>
+            <span className={styles.logoLink}>StrumSpace Studio</span>
           </h2>
         )}
       </div>
 
       {!collapsed && (
         <ul className={styles.nav}>
-          <li><Link to="/single" className={styles.navLink}>Dashboard</Link></li>
-          <li><Link to="/catalog" className={styles.navLink}>Song Catalog</Link></li>
-          <li><Link to="/multi" className={styles.navLink}>Multi Player</Link></li>
-          <li><Link to="/settings" className={styles.navLink}>Settings</Link></li>
+          <li onClick={() => handleTabClick('dashboard')} className={activeTab === 'dashboard' ? styles.active : ''}>Dashboard</li>
+          <li onClick={() => handleTabClick('catalog')} className={activeTab === 'catalog' ? styles.active : ''}>Song Catalog</li>
+          <li onClick={() => handleTabClick('multi')} className={activeTab === 'multi' ? styles.active : ''}>Multi Player</li>
+          <li onClick={() => handleTabClick('settings')} className={activeTab === 'settings' ? styles.active : ''}>Settings</li>
         </ul>
       )}
 

@@ -65,16 +65,16 @@ function SinglePlayer({ onAudioReady }) {
           <h3>Recording Controls</h3>
           <p>Duration: {recordingTime}s</p>
           {!isRecording ? (
-            <button onClick={startRecording}>Start Recording</button>
+            <button onClick={startRecording}>Start session</button>
           ) : (
             <button onClick={stopRecording}>Stop Recording</button>
           )}
         </div>
 
-        <div className={styles.transcriptBox}>
+        {/* <div className={styles.transcriptBox}>
           <h3>Live Transcript</h3>
           <p>{transcript || 'Transcribed text will appear here...'}</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
