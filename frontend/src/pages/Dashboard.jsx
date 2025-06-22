@@ -4,21 +4,21 @@ import Sidebar from '../components/Sidebar';
 import SinglePlayer from './Singleplayer';
 import Catalog from './Catalog';
 import MultiPlayer from './MultiPlayer';
-import Settings from './Settings';
+import MiniDash from './MiniDash';
 
 function Dashboard() {
-  const [activeTab, setActiveTab] = useState('dashboard'); // default
+  const [activeTab, setActiveTab] = useState('minidash'); // default
 
   const renderActiveTab = () => {
     switch (activeTab) {
-      case 'dashboard':
+      case 'minidash':
+        return <MiniDash />;
+      case 'single':
         return <SinglePlayer />;
       case 'catalog':
         return <Catalog />;
       case 'multi':
         return <MultiPlayer />;
-      case 'settings':
-        return <Settings />;
       default:
         return <SinglePlayer />;
     }
