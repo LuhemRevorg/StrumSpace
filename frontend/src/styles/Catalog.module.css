@@ -1,0 +1,89 @@
+.catalogPage {
+  padding: 2rem;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.searchBar {
+  flex: 1;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+}
+
+.filterDropdown {
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.cover {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.title {
+  margin: 0.5rem 0 0.2rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.artist {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.level {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.easy {
+  background: #e0f8e9;
+  color: #2f9e44;
+}
+
+.medium {
+  background: #fff3cd;
+  color: #f59f00;
+}
+
+.hard {
+  background: #ffe3e3;
+  color: #d6336c;
+}
