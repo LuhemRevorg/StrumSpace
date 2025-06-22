@@ -1,8 +1,9 @@
 import React from 'react'
 import { useEffect, useRef, useState } from 'react';
 import styles from '../styles/Dashboard.module.css';
+import mockSongs from '../assets/mockSongs';
 
-function MultiPlayer() {
+function MultiPlayers() {
   const videoRef = useRef(null);
     const mediaRecorderRef = useRef(null);
     const [isRecording, setIsRecording] = useState(false);
@@ -70,23 +71,17 @@ function MultiPlayer() {
             </div>
         </div>
         <div className={styles.bottomSection}>
-          <div className={styles.toolsBox}>
-            <h3>Recording Controls</h3>
-            <p>Duration: {recordingTime}s</p>
-            {!isRecording ? (
-              <button onClick={startRecording}>Start Recording</button>
-            ) : (
-              <button onClick={stopRecording}>Stop Recording</button>
-            )}
-          </div>
-  
-          <div className={styles.transcriptBox}>
-            <h3>Live Transcript</h3>
-            <p>{transcript || 'Transcribed text will appear here...'}</p>
+          <div className={styles.catalogScroll}>
+            {mockSongs.map((song) => (
+              <div key={song.id} className={styles.albumCard}>
+                <img src={song.cover} alt={song.title} className={styles.albumCover} />
+                <p className={styles.songTitle}>{song.title}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
     );
   }
 
-export default MultiPlayer
+export default MultiPlayers;
