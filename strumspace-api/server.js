@@ -24,9 +24,9 @@ app.use(express.json({ limit: '10mb' })); // Increased for image data
 // Store active sessions
 const activeSessions = new Map();
 
-// CHORD DATABASE
+// 🎸 COMPREHENSIVE CHORD DATABASE
 const chordDatabase = {
-    // MAJOR CHORDS (Beginner)
+    // ✅ MAJOR CHORDS (Beginner)
     "a": {
       "id": "a",
       "name": "A Major",
@@ -102,7 +102,7 @@ const chordDatabase = {
     },
     "gmajor": { "redirect": "g" },
   
-    // MINOR CHORDS (Beginner)
+    // ✅ MINOR CHORDS (Beginner)
     "am": {
       "id": "am",
       "name": "A Minor",
@@ -147,7 +147,7 @@ const chordDatabase = {
     },
     "dminor": { "redirect": "dm" },
   
-    // INTERMEDIATE CHORDS
+    // ✅ INTERMEDIATE CHORDS
     "f": {
       "id": "f",
       "name": "F Major",
@@ -186,7 +186,7 @@ const chordDatabase = {
     },
     "bminor": { "redirect": "bm" },
   
-    // SEVENTH CHORDS
+    // ✅ SEVENTH CHORDS
     "a7": {
       "id": "a7",
       "name": "A Dominant 7",
@@ -241,7 +241,7 @@ const chordDatabase = {
       "audioUrl": "/audio/chords/g7.mp3"
     },
   
-    // POWER CHORDS (Advanced)
+    // ✅ POWER CHORDS (Advanced)
     "a5": {
       "id": "a5",
       "name": "A Power Chord",
@@ -268,7 +268,7 @@ const chordDatabase = {
       "audioUrl": "/audio/chords/e5.mp3"
     },
   
-    // SUSPENDED CHORDS
+    // ✅ SUSPENDED CHORDS
     "dsus2": {
       "id": "dsus2",
       "name": "D Suspended 2",
@@ -297,7 +297,7 @@ const chordDatabase = {
       "audioUrl": "/audio/chords/dsus4.mp3"
     },
   
-    // CAPO VARIATIONS & ALTERNATIVES
+    // ✅ CAPO VARIATIONS & ALTERNATIVES
     "cadd9": {
       "id": "cadd9",
       "name": "C Add 9",
@@ -330,7 +330,7 @@ const chordDatabase = {
       "audioUrl": "/audio/chords/gb.mp3"
     }
   };
-
+  
 // 🎯 INITIALIZE SERVICE ORCHESTRATOR
 const orchestrator = new ServiceOrchestrator(chordDatabase, io);
 

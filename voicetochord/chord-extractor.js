@@ -284,6 +284,7 @@ console.log('🎸 Connecting to Guitar API backend on port 3001...');
 console.log('🎙️ Whisper + GPT chord detection ready!');
 console.log('📡 Waiting for audio analysis requests...');
 
+// Optional: Test the connection after startup
 setTimeout(() => {
   if (guitarSocket.connected) {
     console.log('✅ All connections established successfully!');
@@ -294,3 +295,35 @@ setTimeout(() => {
     console.log('⚠️ Guitar API connection not established. Check if server is running on port 3001.');
   }
 }, 2000);
+
+function testChordSending() {
+  console.log('🧪 Testing chord detection with comprehensive database...');
+  
+  const testChords = ['Am', 'Bm', 'C', 'F', 'A7', 'Dsus4', 'Cadd9'];
+  
+  testChords.forEach((chord, index) => {
+    setTimeout(() => {
+      if (guitarSocket.connected) {
+        console.log(`🎸 Testing chord: ${chord}`);
+        
+        guitarSocket.emit('chord-detected', {
+          chord: chord,
+          sessionId: `test_${index}`,
+          confidence: 0.95,
+          source: 'integration_test',
+          timestamp: Date.now()
+        });
+      }
+    }, (index + 1) * 2000); // 2 seconds between each test
+  });
+}
+
+// Run test after connections are established
+setTimeout(() => {
+  if (guitarSocket.connected) {
+    console.log('🎯 Running comprehensive chord test...');
+    testChordSending();
+  } else {
+    console.log('❌ Not connected to Guitar API');
+  }
+}, 3000);
