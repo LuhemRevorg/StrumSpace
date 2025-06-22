@@ -1,0 +1,33 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background-color: #000000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 10px #00ffc3, 0 0 30px #00ffc3 inset;
+  z-index: 10;
+}
+
+.logo {
+  height: 42px;
+  filter: drop-shadow(0 0 8px #00ffc3);
+}
+
+.button {
+  background-color: #e67732;
+  padding: 0.6rem 1.4rem;
+  border-radius: 12px;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  box-shadow: 0 0 12px #e67732;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background-color: #ffa34d;
+  box-shadow: 0 0 24px #ffa34d, 0 0 48px #e67732;
+  transform: scale(1.05);
+}
