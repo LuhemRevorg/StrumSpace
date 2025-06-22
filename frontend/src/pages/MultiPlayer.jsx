@@ -3,75 +3,81 @@ import styles from '../styles/Dashboard.module.css';
 import mockSongs from '../assets/mockSongs';
 
 function MultiPlayers() {
-  // existing refs and states
-  const videoRef = useRef(null);
+  /* ─────────── Refs & State ─────────── */
+  const videoRef      = useRef(null);
+  const audioRef      = useRef(null);
   const mediaRecorderRef = useRef(null);
-  const [isRecording, setIsRecording] = useState(false);
-  const [recordingTime, setRecordingTime] = useState(0);
-  const [audioBlob, setAudioBlob] = useState(null);
-  const [videoError, setVideoError] = useState(false);
-  const timerRef = useRef(null);
+  const timerRef         = useRef(null);
 
-  // new state variables
-  const [hoveredSongId, setHoveredSongId] = useState(null);
-  const [selectedSongId, setSelectedSongId] = useState(null);
-  const [showPopup, setShowPopup] = useState(false);
-  const [sessionStarted, setSessionStarted] = useState(false);
+  const [isRecording,       setIsRecording]       = useState(false);
+  const [recordingTime,     setRecordingTime]     = useState(0);
+  const [audioBlob,         setAudioBlob]         = useState(null);
+  const [videoError,        setVideoError]        = useState(false);
+
+  const [hoveredSongId,     setHoveredSongId]     = useState(null);
+  const [selectedSongId,    setSelectedSongId]    = useState(null);
+  const [showPopup,         setShowPopup]         = useState(false);
+  const [sessionStarted,    setSessionStarted]    = useState(false);
   const [currentChordIndex, setCurrentChordIndex] = useState(0);
 
-  // get selected song data easily
   const selectedSong = mockSongs.find((s) => s.id === selectedSongId);
 
+  /* ─────────── Camera startup ─────────── */
   useEffect(() => {
     async function startCamera() {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-        }
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: true,
+        });
+        if (videoRef.current) videoRef.current.srcObject = stream;
       } catch (err) {
         console.error('Error accessing media devices:', err);
         setVideoError(true);
       }
     }
-
     startCamera();
   }, []);
 
-  // mock progression example in song data:
-  // Each song object should have a 'progression' array:
-  // progression: [{chord: 'C', time: 0}, {chord: 'G', time: 5000}, ...]
-  // For demo, we will fake progression timing
-
+  /* ─────────── Chord-sync with audioRef ─────────── */
   useEffect(() => {
-    let interval;
-    if (sessionStarted && selectedSong?.progression) {
-      interval = setInterval(() => {
-        setCurrentChordIndex((prev) => {
-          if (prev < selectedSong.progression.length - 1) return prev + 1;
-          else return 0; // loop or stop? You decide
-        });
-      }, 3000); // advance chord every 3 seconds (adjust as needed)
-    }
-    return () => clearInterval(interval);
-  }, [sessionStarted, selectedSong]);
+    const audioEl = audioRef.current;
+    if (!audioEl || !sessionStarted || !selectedSong?.progression) return;
 
+    const handleTimeUpdate = () => {
+      const t = audioEl.currentTime;
+      const prog = selectedSong.progression;
+
+      // Find last index whose start <= current time
+      let idx = prog.findIndex(
+        (step, i) => t >= step.start && (i === prog.length - 1 || t < prog[i + 1].start)
+      );
+      if (idx === -1) idx = 0; // fallback
+      if (idx !== currentChordIndex) setCurrentChordIndex(idx);
+    };
+
+    audioEl.addEventListener('timeupdate', handleTimeUpdate);
+    return () => audioEl.removeEventListener('timeupdate', handleTimeUpdate);
+  }, [sessionStarted, selectedSong, currentChordIndex]);
+
+  /* ─────────── Recording helpers ─────────── */
   const startRecording = () => {
-    const stream = videoRef.current.srcObject;
+    const stream = videoRef.current?.srcObject;
+    if (!stream) return;
     const mediaRecorder = new MediaRecorder(stream);
-    let chunks = [];
+    const chunks = [];
 
     mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
-
-    mediaRecorder.onstop = () => {
-      const blob = new Blob(chunks, { type: 'audio/mp3' });
-      setAudioBlob(blob);
-    };
+    mediaRecorder.onstop = () =>
+      setAudioBlob(new Blob(chunks, { type: 'audio/mp3' }));
 
     mediaRecorder.start();
     mediaRecorderRef.current = mediaRecorder;
     setIsRecording(true);
-    timerRef.current = setInterval(() => setRecordingTime((prev) => prev + 1), 1000);
+    timerRef.current = setInterval(
+      () => setRecordingTime((p) => p + 1),
+      1000
+    );
   };
 
   const stopRecording = () => {
@@ -80,8 +86,9 @@ function MultiPlayers() {
     clearInterval(timerRef.current);
   };
 
+  /* ─────────── Song selection & session control ─────────── */
   const onSongClick = (id) => {
-    if (sessionStarted) return; // prevent changing songs mid session
+    if (sessionStarted) return;
     setSelectedSongId(id);
     setShowPopup(true);
   };
@@ -92,30 +99,39 @@ function MultiPlayers() {
   };
 
   const onStart = () => {
+    if (!selectedSong) return;
     setShowPopup(false);
     setSessionStarted(true);
     setCurrentChordIndex(0);
-    if (audioRef.current && selectedSong?.audio) {
+
+    if (audioRef.current) {
       audioRef.current.src = selectedSong.audio;
-      audioRef.current.play().catch((e) => console.log('Audio play error:', e));
+      audioRef.current.currentTime = 0;
+      audioRef.current
+        .play()
+        .catch((e) => console.warn('Audio play error:', e));
     }
   };
 
   const onEndSession = () => {
     setSessionStarted(false);
-    setSelectedSongId(null);
     setCurrentChordIndex(0);
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
-      audioRef.current.src = ''; // clear source
+      audioRef.current.src = '';
     }
   };
 
+  /* ─────────── JSX ─────────── */
   return (
     <div className={styles.playerWrapper}>
       <h1>Multi Player Mode</h1>
 
+      {/* Hidden audio element for track playback */}
+      <audio ref={audioRef} hidden />
+
+      {/* ───── Top (video split-screen) ───── */}
       <div className={styles.topSectionForSplitScreen}>
         <div className={styles.videoContainer}>
           <p>Player 1 (You)</p>
@@ -125,7 +141,13 @@ function MultiPlayers() {
               <small>Camera access not granted</small>
             </div>
           ) : (
-            <video ref={videoRef} className={styles.video} autoPlay muted playsInline />
+            <video
+              ref={videoRef}
+              className={styles.video}
+              autoPlay
+              muted
+              playsInline
+            />
           )}
         </div>
 
@@ -137,13 +159,15 @@ function MultiPlayers() {
         </div>
       </div>
 
+      {/* ───── Bottom (catalog + controls) ───── */}
       <div className={styles.bottomSection} style={{ flexDirection: 'column' }}>
+        {/* Album / song catalog */}
         <div
           className={styles.catalogScroll}
           style={{
             maxHeight: sessionStarted ? '120px' : '300px',
             overflowY: sessionStarted ? 'hidden' : 'auto',
-            pointerEvents: sessionStarted ? 'none' : 'auto', // freeze scroll & clicks on catalog during session
+            pointerEvents: sessionStarted ? 'none' : 'auto',
             transition: 'max-height 0.3s ease',
           }}
         >
@@ -166,16 +190,14 @@ function MultiPlayers() {
           })}
         </div>
 
-        {/* Popup for progression */}
+        {/* Progression popup before starting */}
         {showPopup && selectedSong && (
           <div className={styles.popupOverlay}>
             <div className={styles.popup}>
-              <h2>{selectedSong.title} - Progression</h2>
-              <ul>
+              <h2>{selectedSong.title} – Progression</h2>
+              <ul className={styles.progressionList}>
                 {selectedSong.progression?.map((step, i) => (
-                  <li key={i}>
-                    {step.chord} {i === currentChordIndex ? '← Current' : ''}
-                  </li>
+                  <li key={i}>{step.chord}</li>
                 )) || <li>No progression data available.</li>}
               </ul>
               <div className={styles.popupButtons}>
@@ -186,32 +208,33 @@ function MultiPlayers() {
           </div>
         )}
 
-        {/* Session Control */}
-        {sessionStarted && (
-  <div>
-    <div className={styles.sessionControls}>
-      <p>
-        Now Playing: <strong>{selectedSong.title}</strong> - Chord:{' '}
-        <span>{selectedSong.progression?.[currentChordIndex]?.chord || '-'}</span>
-      </p>
-      <button onClick={onEndSession}>End Session</button>
-    </div>
+        {/* Live session info */}
+        {sessionStarted && selectedSong && (
+          <>
+            <div className={styles.sessionControls}>
+              <p>
+                Now Playing: <strong>{selectedSong.title}</strong> – Chord:{' '}
+                <span>{selectedSong.progression?.[currentChordIndex]?.chord || '-'}</span>
+              </p>
+              <button onClick={onEndSession}>End Session</button>
+            </div>
 
-    <div className={styles.progression}>
-      <h3>Current Progression</h3>
-      <ul>
-        {selectedSong.progression?.map((step, i) => (
-          <li
-            key={i}
-            className={i === currentChordIndex ? styles.current : ''}
-          >
-            {step.chord} {i === currentChordIndex ? '← Current' : ''}
-          </li>
-        )) || <li>No progression data available.</li>}
-      </ul>
-    </div>
-  </div>
-)}
+            <div className={styles.progression}>
+              <ul>
+                {selectedSong.progression
+                  ?.slice(currentChordIndex) // show current & upcoming chords
+                  .map((step, i) => (
+                    <li
+                      key={i}
+                      className={i === 0 ? styles.current : ''}
+                    >
+                      {step.chord} {i === 0 ? '← Current' : ''}
+                    </li>
+                  )) || <li>No progression data available.</li>}
+              </ul>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
