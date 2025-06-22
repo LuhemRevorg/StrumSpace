@@ -19,6 +19,7 @@ const mockSongs = [
   { id: 18, title: "abcdefu", artist: "GAYLE", difficulty: "Hard", cover: "/covers/abcdefu.jpg" },
   { id: 19, title: "Heat Waves", artist: "Glass Animals", difficulty: "Medium", cover: "/covers/heat_waves.jpg" },
   { id: 20, title: "Bad Habits", artist: "Ed Sheeran", difficulty: "Easy", cover: "/covers/bad_habits.jpg" },
+  { id: 21, title: "Riptide", artist: "Vance Joy", difficulty: "Easy", cover: "/covers/riptide.jpg", audio: "/audios/Riptide.mp3" },
 ];
 
 export default mockSongs;

@@ -152,3 +152,130 @@ button:hover {
   flex-wrap: wrap;
 }
 
+/* Highlight hovered card with subtle scale and glow */
+.albumCard.hovered {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 0 12px 2px #ff3b3b;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+/* Selected card is permanently lifted and glowing red */
+.albumCard.selected {
+  transform: translateY(-12px) scale(1.08);
+  box-shadow: 0 0 20px 4px #ff1a1a;
+  border: 2px solid #ff1a1a;
+  cursor: default;
+}
+
+/* Disable pointer events and dim the other cards when selected */
+.catalogScroll.sessionStarted .albumCard:not(.selected) {
+  opacity: 0.5;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Popup overlay covering full viewport */
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup box styling */
+.popup {
+  background-color: #1a1a1a;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
+  color: #fff;
+  box-shadow: 0 0 20px #ff3b3b;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.popup h2 {
+  margin-bottom: 1rem;
+  color: #ff3b3b;
+}
+
+.popup ul {
+  list-style: none;
+  padding-left: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+
+.popup ul li {
+  margin-bottom: 0.4rem;
+  font-size: 1.1rem;
+}
+
+.popup ul li strong {
+  color: #ff5a5a;
+}
+
+.popupButtons {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.popupButtons button {
+  background-color: #ff3b3b;
+  border: none;
+  padding: 0.7rem 1.4rem;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  min-width: 100px;
+}
+
+.popupButtons button:hover {
+  background-color: #ff1a1a;
+}
+
+/* Session control fixed at bottom or top */
+.sessionControls {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a1a;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px #ff3b3b;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: 'Orbitron', sans-serif;
+  z-index: 1001;
+}
+
+.sessionControls button {
+  background-color: #ff3b3b;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sessionControls button:hover {
+  background-color: #ff1a1a;
+}
+
+
