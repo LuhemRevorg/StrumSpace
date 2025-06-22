@@ -3,7 +3,7 @@ import styles from '../styles/Dashboard.module.css';
 import Sidebar from '../components/Sidebar';
 import SinglePlayer from './Singleplayer';
 import Catalog from './Catalog';
-import MultiPlayer from './Multiplayer';
+import MultiPlayer from './MultiPlayer';
 import Settings from './Settings';
 
 function Dashboard() {
