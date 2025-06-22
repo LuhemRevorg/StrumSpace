@@ -5,7 +5,7 @@ import Dashboard from './pages/Dashboard';
 import SinglePlayer from './pages/Singleplayer';
 import Catalog from './pages/Catalog';
 import MiniDash from './pages/MiniDash';
-import FreePlay from './pages/Freeplay';
+import FreePlay from './pages/FreePlay';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MultiPlayers from './pages/MultiPlayer';
 

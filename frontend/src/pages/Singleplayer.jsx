@@ -555,7 +555,9 @@ function SinglePlayer({ onAudioReady }) {
   // =========================
   return (
     <div className={styles.playerWrapper}>
-      {/* Video Display Area */}
+      <h1>Single Player Mode</h1>
+
+
       <div className={styles.videoContainer}>
         {/* Hidden video element */}
         <video 
