@@ -15,7 +15,6 @@ function SinglePlayer({ onAudioReady }) {
   const [transcript, setTranscript] = useState('');
   const [audioBlob, setAudioBlob] = useState(null);
 
-  // Chord progression state
   const [sessionId, setSessionId] = useState(null);
   const [currentChord, setCurrentChord] = useState(null);
   const [chordSequence, setChordSequence] = useState([]);
