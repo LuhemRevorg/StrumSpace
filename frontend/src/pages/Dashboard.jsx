@@ -12,7 +12,7 @@ function Dashboard() {
   const renderActiveTab = () => {
     switch (activeTab) {
       case 'minidash':
-        return <MiniDash />;
+        return <MiniDash setActiveTab={setActiveTab}/>;
       case 'single':
         return <SinglePlayer />;
       case 'catalog':
@@ -23,6 +23,8 @@ function Dashboard() {
         return <SinglePlayer />;
     }
   };
+
+  
 
   return (
     <div className={styles.wrapper}>

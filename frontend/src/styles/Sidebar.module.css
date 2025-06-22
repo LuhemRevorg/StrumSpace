@@ -64,3 +64,8 @@
 .nav li:hover {
   background-color: #333;
 }
+
+.logoImage {
+  position: inherit;
+  margin-right: 10px;
+}
