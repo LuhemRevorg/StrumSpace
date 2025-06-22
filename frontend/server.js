@@ -1,10 +1,9 @@
-// server.js
 const express = require('express');
 const multer = require('multer');
 const OpenAI = require('openai');
 const cors = require('cors');
 const fs = require('fs');
-
+ 
 require('dotenv').config();
 
 const app = express();
