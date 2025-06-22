@@ -1,10 +1,28 @@
 {
+  "name": "voicetochord",
+  "version": "1.0.0",
+  "description": "AI Guitar Teacher - Voice to Chord Detection Service",
+  "main": "ai-service.js",
+  "scripts": {
+    "start": "node ai-service.js",
+    "dev": "nodemon ai-service.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
-    "axios": "^1.10.0",
     "dotenv": "^16.5.0",
-    "fs": "^0.0.1-security",
     "openai": "^5.6.0",
-    "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1"
-  }
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "guitar",
+    "ai",
+    "voice",
+    "chord",
+    "detection"
+  ],
+  "author": "Your Team",
+  "license": "MIT"
 }
