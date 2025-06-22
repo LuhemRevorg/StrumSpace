@@ -2,23 +2,22 @@
   min-width: 620px;
   margin: 1px auto;
   padding: 20px 32px;
-  background: #0d0d2b;
-  border-radius: 24px;
-  box-shadow: 0 0 25px rgba(0, 255, 255, 0.1);
+  background: #f9f9f9;
+  border-radius: 16px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid rgba(0, 255, 255, 0.15);
+  border: 1px solid #e0e0e0;
 }
 
 .title {
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin-bottom: 32px;
-  color: #00fff7;
-  text-shadow: 0 0 8px #00fff7, 0 0 16px #00fff7;
-  font-family: 'Orbitron', sans-serif;
-  letter-spacing: 1.2px;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #1a1a1a;
+  font-family: 'Segoe UI', sans-serif;
+  letter-spacing: 0.8px;
   text-align: center;
 }
 
@@ -26,7 +25,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
 }
 
 .group {
@@ -36,58 +35,52 @@
 }
 
 .label {
-  color: #ffffff;
+  color: #333333;
   font-size: 1rem;
-  font-family: 'Orbitron', sans-serif;
-  text-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
+  font-family: 'Segoe UI', sans-serif;
   letter-spacing: 0.5px;
 }
 
 .input {
   padding: 12px 16px;
   font-size: 1rem;
-  border-radius: 12px;
-  border: none;
-  background: rgba(255, 255, 255, 0.06);
-  color: white;
-  box-shadow: inset 0 0 8px rgba(0, 255, 255, 0.15);
-  transition: box-shadow 0.3s;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #333;
+  transition: border-color 0.3s;
 }
 
 .input:focus {
   outline: none;
-  box-shadow: 0 0 12px #00fff7;
-  background: rgba(0, 255, 255, 0.05);
+  border-color: #e63232;
+  background: #fff;
 }
 
 .button {
   margin-top: 20px;
   padding: 14px;
-  background: #00fff7;
-  color: #000;
-  font-size: 1.2rem;
-  font-weight: 800;
+  background: #e63232;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
   border: none;
-  border-radius: 16px;
+  border-radius: 10px;
   cursor: pointer;
-  box-shadow: 0 0 25px #00fff7, 0 0 60px #00fff7;
   transition: all 0.3s ease;
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .button:hover {
-  background: #0ff;
-  box-shadow: 0 0 40px #00fff7, 0 0 90px #00fff7;
+  background: #cc2b2b;
 }
 
 .error {
   color: #ff4e6d;
   font-size: 0.9rem;
   text-align: center;
-  text-shadow: 0 0 6px rgba(255, 0, 0, 0.6);
 }
 
-/* Outer layout */
 .wrapper {
   display: flex;
   justify-content: center;
@@ -95,30 +88,31 @@
   gap: 40px;
   padding: 60px 40px;
   flex-wrap: wrap;
-  background: radial-gradient(circle at top, #0f0c29, #302b63, #000);
+  background: #ffffff;
   min-height: 100vh;
   box-sizing: border-box;
+  backdrop-filter: blur(6px);
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.3);
 }
 
-
-/* Left Signup Form – reuse previous styles */
 .container {
   width: 420px;
   padding: 40px 32px;
-  background: #0d0d2b;
-  border-radius: 24px;
-  box-shadow: 0 0 25px rgba(0, 255, 255, 0.1);
-  border: 1px solid rgba(0, 255, 255, 0.15);
+  background: #f9f9f9;
+  border-radius: 16px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e0e0e0;
 }
 
-/* Right Social Container */
 .socialContainer {
   width: 300px;
   padding: 32px 24px;
-  background: rgba(0, 10, 30, 0.9);
-  border-radius: 24px;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #fafafa;
+  border-radius: 16px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e0e0e0;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -126,51 +120,56 @@
 }
 
 .socialTitle {
-  color: #ffffff;
-  font-size: 1.2rem;
+  color: #1a1a1a;
+  font-size: 1.1rem;
   margin-bottom: 10px;
-  text-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-/* Glowing button styles */
+.socialButtonGroup {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  width: 100%;
+  justify-content: center;
+}
+
 .socialButton {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
   width: 100%;
   padding: 14px;
   font-size: 1rem;
   font-weight: 600;
   color: #fff;
   border: none;
-  border-radius: 12px;
+  border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: 'Orbitron', sans-serif;
-  letter-spacing: 1px;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.08);
+  font-family: 'Segoe UI', sans-serif;
+  letter-spacing: 0.5px;
+  max-width: fit-content;
 }
 
-/* Individual providers with hover glow */
 .discord {
   background: #5865f2;
 }
 .discord:hover {
-  box-shadow: 0 0 20px #5865f2, 0 0 40px #5865f2;
+  background: #4752d4;
 }
 
 .google {
   background: #db4437;
 }
 .google:hover {
-  box-shadow: 0 0 20px #db4437, 0 0 40px #db4437;
+  background: #c33c2f;
 }
 
 .apple {
   background: #1c1c1e;
 }
 .apple:hover {
-  box-shadow: 0 0 20px #ffffff, 0 0 40px #ffffff;
+  background: #111;
 }

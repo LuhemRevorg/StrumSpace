@@ -1,5 +1,27 @@
 import React, { useState } from 'react';
 import styles from '../styles/Signup.module.css';
+import { FaDiscord, FaGoogle, FaApple } from 'react-icons/fa';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+import MusicRain from '../components/MusicRain';
+
+<Canvas
+  style={{
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: 0,
+    width: '100%',
+    height: '100vh',
+  }}
+  camera={{ position: [0, 0, 10], fov: 45 }}
+>
+  <ambientLight intensity={0.6} />
+  <directionalLight position={[0, 5, 5]} intensity={1.2} />
+  <MusicRain /> {/* Now using your actual falling notes */}
+</Canvas>
+
+
 
 const Signup = () => {
     const [form, setForm] = useState({
@@ -34,6 +56,7 @@ const Signup = () => {
     };
 
     return (
+        <div style={{ position: 'relative', zIndex: 2 }}>
         <div className={styles.wrapper}>
             {/* Left: Signup Form */}
             <div className={styles.container}>
@@ -59,10 +82,15 @@ const Signup = () => {
                     {success && <div style={{ color: '#06fcd4', fontSize: '0.95rem', textAlign: 'center' }}>{success}</div>}
                     <button className={styles.button}>SIGN UP</button>
                 </form>
-                <div className={styles.socialButton}>
-                    <button className={`${styles.socialButton} ${styles.discord}`}>Discord</button>
-                    <button className={`${styles.socialButton} ${styles.google}`}>Google</button>
-                    <button className={`${styles.socialButton} ${styles.apple}`}>Apple</button>
+                <div className={styles.socialButtonGroup}>
+                    <button className={`${styles.socialButton} ${styles.discord}`}> <FaDiscord size={20} /> </button>
+                    <button className={`${styles.socialButton} ${styles.google}`}> <FaGoogle size={20} /> </button>
+                    <button className={`${styles.socialButton} ${styles.apple}`}> <FaApple size={20} /> </button>
+                </div>
+                <mesh position={[0, 0, 0]}>
+                    <boxGeometry />
+                    <meshStandardMaterial color="hotpink" />
+                    </mesh>
                 </div>
             </div>
         </div>
