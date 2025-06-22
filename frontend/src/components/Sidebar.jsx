@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import styles from '../styles/Sidebar.module.css';
 import { Menu } from 'lucide-react';
 import logo from '../logos/logo_dark.jpeg';
 
-function Sidebar() {
+function Sidebar({ onTabChange, activeTab }) {
   const [collapsed, setCollapsed] = useState(false);
 
-  const toggleSidebar = () => {
-    setCollapsed(prev => !prev);
-  };
+  const toggleSidebar = () => setCollapsed(prev => !prev);
+
+  const tabs = [
+    { key: 'minidash', label: 'Dashboard' },
+    { key: 'catalog', label: 'Song Catalog' },
+    { key: 'single', label: 'Single Player' },
+    { key: 'multi', label: 'Multi Player' },
+    { key: 'freeplay', label: 'Freeplay Random Chords' },
+  ];
 
   return (
     <div className={`${styles.sidebar} ${collapsed ? styles.collapsed : ''}`}>
@@ -19,20 +24,27 @@ function Sidebar() {
         </button>
         {!collapsed && (
           <h2 className={styles.logo}>
-            <Link to="/" className={styles.logoLink}>StrumSpace Studio</Link>
+            
           </h2>
         )}
       </div>
 
       {!collapsed && (
         <ul className={styles.nav}>
-          <li><Link to="/single" className={styles.navLink}>Dashboard</Link></li>
-          <li><Link to="/catalog" className={styles.navLink}>Song Catalog</Link></li>
-          <li><Link to="/multi" className={styles.navLink}>Multi Player</Link></li>
-          <li><Link to="/settings" className={styles.navLink}>Settings</Link></li>
+          {tabs.map((tab) => (
+            <li
+              key={tab.key}
+              onClick={() => onTabChange(tab.key)}
+              className={`${styles.navLink} ${activeTab === tab.key ? styles.active : ''}`}
+            >
+              {tab.label}
+            </li>
+          ))}
         </ul>
       )}
-
+            <button onClick={() => window.location.href = '/'}
+              className={`${styles.navLink} styles.active`}
+            >Back home?</button>
       <img src={logo} alt="Logo" className={styles.logoImage} />
     </div>
   );

@@ -600,35 +600,12 @@ function SinglePlayer({ onAudioReady }) {
       <div className={styles.bottomSection}>
         {/* Recording Controls */}
         <div className={styles.toolsBox}>
-          <h3>🎸 Guitar Learning Controls</h3>
-          
-          {/* Chord progression info */}
-          {currentChord && (
-            <div style={{ 
-              marginBottom: '15px', 
-              padding: '15px', 
-              backgroundColor: '#f8f9fa', 
-              borderRadius: '8px',
-              border: '1px solid #e9ecef'
-            }}>
-              <div style={{ marginBottom: '8px' }}>
-                <strong style={{ fontSize: '18px', color: '#2d3748' }}>
-                  Current Chord: {currentChord}
-                </strong>
-              </div>
-              
-              {progress > 0 && (
-                <div style={{ marginBottom: '8px', fontSize: '14px', color: '#666' }}>
-                  Progress: {Math.round(progress)}% | Score: {score} | Attempts: {attempts}
-                </div>
-              )}
-              
-              {chordSequence.length > 0 && (
-                <div style={{ fontSize: '12px', color: '#888' }}>
-                  <strong>Sequence:</strong> {chordSequence.join(' → ')}
-                </div>
-              )}
-            </div>
+          <h3>Recording Controls</h3>
+          <p>Duration: {recordingTime}s</p>
+          {!isRecording ? (
+            <button onClick={startRecording}>Start session</button>
+          ) : (
+            <button onClick={stopRecording}>Stop Recording</button>
           )}
           
           {/* Recording status */}
@@ -712,40 +689,10 @@ function SinglePlayer({ onAudioReady }) {
           </div>
         </div>
 
-        {/* Feedback Area */}
-        <div className={styles.transcriptBox}>
-          <h3>📢 Live Feedback</h3>
-          
-          <div style={{ marginBottom: '10px' }}>
-            <p style={{ 
-              fontSize: '16px', 
-              lineHeight: '1.5',
-              color: '#2d3748'
-            }}>
-              {chordFeedback || transcript || 'Position your guitar in the camera view and start playing!'}
-            </p>
-          </div>
-          
-          {/* System status */}
-          {sessionId && (
-            <div style={{ 
-              marginTop: '15px', 
-              padding: '10px',
-              backgroundColor: '#f1f3f4',
-              borderRadius: '4px',
-              fontSize: '12px', 
-              color: '#5f6368' 
-            }}>
-              <div><strong>System Status:</strong></div>
-              <div>📷 Camera: {cameraReady ? 'Ready' : 'Starting...'}</div>
-              <div>🎸 Session: {sessionReady ? 'Active' : 'Loading...'}</div>
-              <div>🔍 Detection: {guitarDetected ? 'Guitar found' : 'Looking for guitar...'}</div>
-              {arPositions.length > 0 && (
-                <div>📍 AR Positions: {arPositions.length} markers</div>
-              )}
-            </div>
-          )}
-        </div>
+        {/* <div className={styles.transcriptBox}>
+          <h3>Live Transcript</h3>
+          <p>{transcript || 'Transcribed text will appear here...'}</p>
+        </div> */}
       </div>
     </div>
   );

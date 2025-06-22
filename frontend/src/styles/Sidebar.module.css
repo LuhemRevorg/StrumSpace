@@ -1,6 +1,6 @@
 .sidebar {
   height: 100vh;
-  width: 340px;
+  width: 300px;
   background-color: #1e1e1e;
   color: white;
   display: flex;
@@ -12,6 +12,23 @@
 .collapsed {
   width: 100px;
 }
+
+.nav li {
+  cursor: pointer;
+  padding: 12px 18px;
+  transition: background 0.2s ease;
+}
+
+.nav li:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.active {
+  background-color: #222c40;
+  color: #00ffd0;
+  font-weight: bold;
+}
+
 
 .topSection {
   display: flex;

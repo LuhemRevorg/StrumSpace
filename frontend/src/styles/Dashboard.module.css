@@ -9,23 +9,19 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+  padding: 1rem;
 }
 
-.videoContainer {
-  width: 100%;
-  max-width: 900px;
-  height: 500px;
-  margin: 0 auto;
-  background: #000;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 0 30px rgba(255, 59, 59, 0.3);
+.topSectionForSplitScreen {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;  
 }
 
 .video {
   width: 100%;
-  height: 100%;
+  height: 400px;
   object-fit: cover;
 }
 
@@ -61,3 +57,225 @@ button:hover {
   background-color: #e63232;
   box-shadow: 0 0 12px #ff3b3b;
 }
+
+
+.catalogScroll {
+  display: flex;
+  overflow-x: scroll;
+  padding: 1rem;
+  gap: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: #00ffe5 transparent;
+  max-width: 150vh;
+  margin-left: 10%;
+}
+
+.catalogScroll::-webkit-scrollbar {
+  height: 8px;
+}
+.catalogScroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.catalogScroll::-webkit-scrollbar-thumb {
+  background-color: #00ffe5;
+  border-radius: 4px;
+}
+
+.albumCard {
+  min-width: 150px;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  padding: 0.5rem;
+  text-align: center;
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 255, 255, 0.1);
+}
+
+.albumCard:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 16px rgba(0, 255, 255, 0.2);
+}
+
+.albumCover {
+  width: 100%;
+  height: 150px;
+  width: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.songTitle {
+  font-size: 0.95rem;
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.offline {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 59, 59, 0.1);
+  color: #ff6b6b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.3rem;
+  border-radius: 16px;
+  text-align: center;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { opacity: 0.8; }
+}
+
+.videoContainer {
+  width: 48%;
+  background: #000;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(255, 59, 59, 0.3);
+  position: relative;
+}
+
+.topSectionForSplitScreen {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  margin-bottom: 1.5rem;
+  gap: 2%;
+  flex-wrap: wrap;
+}
+
+/* Highlight hovered card with subtle scale and glow */
+.albumCard.hovered {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 0 12px 2px #ff3b3b;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+/* Selected card is permanently lifted and glowing red */
+.albumCard.selected {
+  transform: translateY(-12px) scale(1.08);
+  box-shadow: 0 0 20px 4px #ff1a1a;
+  border: 2px solid #ff1a1a;
+  cursor: default;
+}
+
+/* Disable pointer events and dim the other cards when selected */
+.catalogScroll.sessionStarted .albumCard:not(.selected) {
+  opacity: 0.5;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Popup overlay covering full viewport */
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup box styling */
+.popup {
+  background-color: #1a1a1a;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
+  color: #fff;
+  box-shadow: 0 0 20px #ff3b3b;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.popup h2 {
+  margin-bottom: 1rem;
+  color: #ff3b3b;
+}
+
+.popup ul {
+  list-style: none;
+  padding-left: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+
+.popup ul li {
+  margin-bottom: 0.4rem;
+  font-size: 1.1rem;
+}
+
+.popup ul li strong {
+  color: #ff5a5a;
+}
+
+.popupButtons {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.popupButtons button {
+  background-color: #ff3b3b;
+  border: none;
+  padding: 0.7rem 1.4rem;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  min-width: 100px;
+}
+
+.popupButtons button:hover {
+  background-color: #ff1a1a;
+}
+
+/* Session control fixed at bottom or top */
+.sessionControls {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a1a;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px #ff3b3b;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: 'Orbitron', sans-serif;
+  z-index: 1001;
+}
+
+.sessionControls button {
+  background-color: #ff3b3b;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sessionControls button:hover {
+  background-color: #ff1a1a;
+}
+
+
