@@ -14,7 +14,6 @@ function Sidebar({ onTabChange, activeTab }) {
     { key: 'single', label: 'Single Player' },
     { key: 'multi', label: 'Multi Player' },
     { key: 'freeplay', label: 'Freeplay Random Chords' },
-    { key: 'settings', label: 'Settings' },
   ];
 
   return (
@@ -43,7 +42,9 @@ function Sidebar({ onTabChange, activeTab }) {
           ))}
         </ul>
       )}
-
+            <button onClick={() => window.location.href = '/'}
+              className={`${styles.navLink} styles.active`}
+            >Back home?</button>
       <img src={logo} alt="Logo" className={styles.logoImage} />
     </div>
   );

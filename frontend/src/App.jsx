@@ -2,7 +2,6 @@ import './App.css';
 import Landing from './pages/Landing';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
-import Settings from './pages/Settings';
 import SinglePlayer from './pages/Singleplayer';
 import Catalog from './pages/Catalog';
 import MiniDash from './pages/MiniDash';
@@ -23,7 +22,6 @@ function App() {
           <Route path="/freeplay" element={<FreePlay />} />
           <Route path="/multi" element={<MultiPlayers />} />
           <Route path="/minidash" element={<MiniDash />} />
-          <Route path="/settings" element={<Settings />} />
         </Routes>
       </div>
     </Router>

@@ -4,7 +4,6 @@ import Sidebar from '../components/Sidebar';
 import SinglePlayer from './Singleplayer';
 import Catalog from './Catalog';
 import MultiPlayer from './MultiPlayer';
-import Settings from './Settings';
 import MiniDash from './MiniDash';
 
 function Dashboard() {
@@ -20,8 +19,6 @@ function Dashboard() {
         return <Catalog />;
       case 'multi':
         return <MultiPlayer />;
-      case 'settings':
-        return <Settings />;
       default:
         return <SinglePlayer />;
     }

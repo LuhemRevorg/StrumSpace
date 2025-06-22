@@ -31,11 +31,6 @@ const MiniDash = () => {
           <h2>Custom Chords / Sequences</h2>
           <p>Create custom chords or practice famous ones.</p>
         </a>
-        
-        <a href="/settings" className={styles.card}>
-          <h2>Settings</h2>
-          <p>Common settings for your best experience!</p>
-        </a>
 
       </div>
     </div>
