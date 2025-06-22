@@ -1,6 +1,5 @@
-# 🎸 AR Guitar API - Team Integration Guide
+# StrumSpace - Team Integration Guide (rhychaw+gj+luhem)
 
-## 🎯 Quick Start for AI & CV Teams
 
 Your API backend is running with advanced service orchestration. Here's everything you need to connect your services.
 
