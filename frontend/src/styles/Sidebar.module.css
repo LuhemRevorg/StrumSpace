@@ -7,7 +7,6 @@
   flex-direction: column;
   transition: width 0.3s ease;
   overflow: hidden;
-  margin-left: -40px;
 }
 
 .collapsed {

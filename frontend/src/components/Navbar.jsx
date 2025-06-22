@@ -6,6 +6,10 @@ import DaLo from '../logos/logo_dark.jpeg';
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
+  const handleNavigate = () => {
+    window.location.href = '/signup';
+  };  
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -20,9 +24,9 @@ export default function Navbar() {
       <img
         src={scrolled ? LiLo : DaLo}
         alt="Logo"
-        className={styles.logo}
+        className={scrolled ? styles.logo_light : styles.logo}
       />
-      <button className={styles.button}>Sign Up</button>
+      <button className={styles.button} onClick={() => handleNavigate()}>Sign Up</button>
     </nav>
   );
 }
