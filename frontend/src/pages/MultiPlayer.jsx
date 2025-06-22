@@ -95,12 +95,21 @@ function MultiPlayers() {
     setShowPopup(false);
     setSessionStarted(true);
     setCurrentChordIndex(0);
+    if (audioRef.current && selectedSong?.audio) {
+      audioRef.current.src = selectedSong.audio;
+      audioRef.current.play().catch((e) => console.log('Audio play error:', e));
+    }
   };
 
   const onEndSession = () => {
     setSessionStarted(false);
     setSelectedSongId(null);
     setCurrentChordIndex(0);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current.src = ''; // clear source
+    }
   };
 
   return (
@@ -179,14 +188,30 @@ function MultiPlayers() {
 
         {/* Session Control */}
         {sessionStarted && (
-          <div className={styles.sessionControls}>
-            <p>
-              Now Playing: <strong>{selectedSong.title}</strong> - Chord:{' '}
-              <span>{selectedSong.progression?.[currentChordIndex]?.chord || '-'}</span>
-            </p>
-            <button onClick={onEndSession}>End Session</button>
-          </div>
-        )}
+  <div>
+    <div className={styles.sessionControls}>
+      <p>
+        Now Playing: <strong>{selectedSong.title}</strong> - Chord:{' '}
+        <span>{selectedSong.progression?.[currentChordIndex]?.chord || '-'}</span>
+      </p>
+      <button onClick={onEndSession}>End Session</button>
+    </div>
+
+    <div className={styles.progression}>
+      <h3>Current Progression</h3>
+      <ul>
+        {selectedSong.progression?.map((step, i) => (
+          <li
+            key={i}
+            className={i === currentChordIndex ? styles.current : ''}
+          >
+            {step.chord} {i === currentChordIndex ? '← Current' : ''}
+          </li>
+        )) || <li>No progression data available.</li>}
+      </ul>
+    </div>
+  </div>
+)}
       </div>
     </div>
   );
