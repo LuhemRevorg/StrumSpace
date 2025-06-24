@@ -44,10 +44,12 @@ StrumSpace revolutionizes music creation through AI-powered composition tools an
 - **Cloud**: AWS/GCP with Terraform provisioning
 
 <img width="1511" alt="11" src="https://github.com/user-attachments/assets/d9abdcce-011a-48b7-accb-cd50c97229c5" />
-<img width="606" alt="image" src="https://github.com/user-attachments/assets/14465453-e2d0-48fd-af06-f2081e10223d" />
+<img width="1512" alt="image" src="https://github.com/user-attachments/assets/14465453-e2d0-48fd-af06-f2081e10223d" />
+<img width="1512" alt="image" src="https://github.com/user-attachments/assets/7224e2ae-94e3-4e6f-886f-bde3f7c2614f" />
 <img width="1512" alt="12" src="https://github.com/user-attachments/assets/58cf6b90-234b-467d-85e6-5e705f275305" />
 <img width="1512" alt="13" src="https://github.com/user-attachments/assets/969a215b-8c72-4772-acf7-084b3107c8ca" />
 <img width="1472" alt="15" src="https://github.com/user-attachments/assets/c4e68d36-b04d-49cb-bf4c-aba06a0a3ab7" />
+
 
 
 
