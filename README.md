@@ -1,73 +1,79 @@
-# StrumSpace - AI-Powered Music Innovation Platform
+# StrumSpace — AR Guitar Learning Platform
 
+An interactive guitar learning app that uses computer vision to detect hand positions in real-time, maps them to chords, and renders visual feedback on a 3D fretboard. Built for beginners who want immediate, visual guidance while learning guitar.
 
-StrumSpace revolutionizes music creation through AI-powered composition tools and real-time collaboration features. Built with a microservices architecture, this platform demonstrates cutting-edge integration of machine learning, cloud-native technologies, and responsive web design.
+## Features
 
-## 🚀 Key Features
-- **AI Music Generation** - Transformer-based models for melody and chord progression creation
-- **Real-time Collaboration** - WebSocket-powered jam sessions with low-latency sync
-- **Audio Analysis API** - FastAPI endpoints for chord recognition and music theory analysis
-- **Cloud-Native Infrastructure** - Kubernetes-managed services with auto-scaling
-- **Responsive Web UI** - React frontend with Web Audio API integration
-- **CI/CD Pipeline** - GitHub Actions for automated testing and deployment
+- **Real-time chord detection** — OpenCV + MediaPipe track finger placement on the guitar neck via webcam, with a YOLO model trained to recognize chord shapes
+- **3D fretboard visualization** — Three.js-powered interactive fretboard that highlights correct finger positions for each chord
+- **Voice-to-chord** — Hum or sing a melody and get matching chord suggestions
+- **AI-assisted learning** — OpenAI API integration for music theory explanations and practice recommendations
+- **Live feedback loop** — WebSocket connection streams CV predictions to the frontend in real-time
 
-## 🛠️ Technology Stack
-
-### Backend Services
-| Component          | Technology                | Functionality                     |
-|--------------------|---------------------------|-----------------------------------|
-| **API Gateway**    | FastAPI + Uvicorn         | REST/WebSocket endpoints          |
-| **ML Serving**     | TorchServe + ONNX Runtime | High-performance model inference  |
-| **Task Queue**     | Celery + RabbitMQ         | Asynchronous processing           |
-| **Database**       | PostgreSQL + pgvector     | Vector embeddings storage         |
-| **Cache**          | Redis                     | Session management & rate limiting|
-| **Search**         | Elasticsearch             | Audio feature indexing            |
-
-### Frontend
-- **Framework**: React 18 + TypeScript
-- **State Management**: Jotai + React Query
-- **Styling**: TailwindCSS + Framer Motion
-- **Audio Processing**: Web Audio API + Tone.js
-- **Visualization**: D3.js + Three.js
-
-### Machine Learning
-- **Chord Recognition**: CRNN model with CTC decoding
-- **Music Generation**: GPT-3 fine-tuned on MIDI datasets
-- **Audio Feature Extraction**: Librosa + Essentia
-- **Model Optimization**: ONNX quantization & pruning
-
-### Infrastructure
-- **Containerization**: Docker + BuildKit
-- **Orchestration**: Kubernetes (EKS/GKE)
-- **Monitoring**: Prometheus + Grafana + Loki
-- **CI/CD**: GitHub Actions + ArgoCD
-- **Cloud**: AWS/GCP with Terraform provisioning
-
-<img width="1511" alt="11" src="https://github.com/user-attachments/assets/d9abdcce-011a-48b7-accb-cd50c97229c5" />
-<img width="1512" alt="image" src="https://github.com/user-attachments/assets/14465453-e2d0-48fd-af06-f2081e10223d" />
-<img width="1512" alt="image" src="https://github.com/user-attachments/assets/7224e2ae-94e3-4e6f-886f-bde3f7c2614f" />
-<img width="1512" alt="12" src="https://github.com/user-attachments/assets/58cf6b90-234b-467d-85e6-5e705f275305" />
-<img width="1512" alt="13" src="https://github.com/user-attachments/assets/969a215b-8c72-4772-acf7-084b3107c8ca" />
-<img width="1472" alt="15" src="https://github.com/user-attachments/assets/c4e68d36-b04d-49cb-bf4c-aba06a0a3ab7" />
-
-
-
-
-
-
-## ⚙️ System Architecture
+## System architecture
 
 ```mermaid
 graph LR
-    A[Web Browser] --> B[NGINX Ingress]
-    B --> C[React Frontend]
-    B --> D[FastAPI Gateway]
-    D --> E[Auth Service]
-    D --> F[Model Serving]
-    D --> G[WebSocket Service]
-    D --> H[Task Queue]
-    F --> I[GPU Nodes]
-    H --> J[Celery Workers]
-    J --> K[PostgreSQL]
-    J --> L[Elasticsearch]
-    J --> M[Cloud Storage]
+    A[Browser] --> B[React Frontend]
+    B -->|WebSocket| C[Express API Server]
+    B -->|REST| C
+    C -->|Socket.io| D[Python CV Service]
+    D --> E[MediaPipe + OpenCV]
+    D --> F[YOLO Model]
+    C --> G[OpenAI API]
+    H[Voice Input] --> C
+    C --> I[Chord Mapping Engine]
+```
+
+## Tech stack
+
+| Layer | Technology |
+|-------|-----------|
+| **Frontend** | React 19, Vite, Three.js (React Three Fiber), Socket.io Client |
+| **API Server** | Node.js, Express, Socket.io |
+| **Computer Vision** | Python, OpenCV, MediaPipe, YOLOv8 |
+| **AI** | OpenAI API |
+| **3D Rendering** | Three.js, @react-three/drei |
+
+## How it works
+
+1. **Webcam captures hand position** — the Python CV service processes the video feed using MediaPipe for hand landmark detection and a custom-trained YOLO model for chord shape recognition
+2. **Predictions stream to frontend** — Socket.io pushes detected chord data from the CV service through the Express server to the React client in real-time
+3. **3D fretboard updates** — React Three Fiber renders the correct finger dots on an interactive fretboard, showing the user where to place their fingers
+4. **Voice-to-chord pipeline** — audio input is processed to extract pitch/melody, which is mapped to suggested chord progressions
+
+## Getting started
+
+### Prerequisites
+- Node.js >= 16
+- Python 3.8+
+- Webcam
+
+### Install and run
+
+```bash
+# Frontend
+cd frontend
+npm install
+npm run dev
+
+# API server
+cd strumspace-api
+npm install
+npm run dev
+
+# CV backend
+pip install -r requirements.txt
+python backend/cv/main.py
+```
+
+## Project structure
+
+```
+strumspace/
+├── frontend/          # React + Three.js client
+├── strumspace-api/    # Express + Socket.io server
+├── backend/cv/        # Python CV service (MediaPipe + YOLO)
+├── voicetochord/      # Audio-to-chord pipeline
+└── runs/detect/train/ # YOLO training artifacts
+```
